@@ -14,3 +14,14 @@
 Route::get('/', function () {
     return view('welcome');
 });
+// Route::get('factory', function () {
+//     $threads = factory('App\Thread', 50)->create();
+
+//     return $threads->each(function ($thread) {
+//         factory('App\Reply', 10)->create(['thread_id' => $thread->id ]);
+//     });
+// });
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/threads', 'ThreadsController@index');
+Route::get('/threads/{thread}', 'ThreadsController@show');
