@@ -2,10 +2,13 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
 class ParticipateInForumTest extends TestCase
 {
+    use DatabaseMigrations;
+
     /** @test */
     public function unauthenticated_users_may_not_add_replies()
     {
