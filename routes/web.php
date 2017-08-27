@@ -23,7 +23,7 @@ Route::get('/', function () {
 // });
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('threaadds', 'ThreadsController');
+Route::resource('threads', 'ThreadsController');
 // Route::get('/threads', 'ThreadsController@index');
 // Route::get('/threads/create', 'ThreadsController@create');
 // Route::post('/threads', 'ThreadsController@store');
