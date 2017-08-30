@@ -20,7 +20,8 @@ class ReadThreadsTest extends TestCase
     {
         // $thread = factory('App\Thread')->create();
         $this->get('/threads')
-        ->assertSee($this->thread->title);
+        ->assertSee($this->thread->title)
+        ->assertSee($this->thread->body);
     }
     /** @test */
     public function a_user_can_read_signle_thread()
@@ -35,5 +36,29 @@ class ReadThreadsTest extends TestCase
         $reply = factory('App\Reply')->create([ 'thread_id' => $this->thread->id ]);
         $this->get($this->thread->path())
         ->assertSee($reply->body);
+    }
+    /** @test */
+    public function a_user_can_filter_threads_by_channel()
+    {
+        $channel = create('App\Channel');
+        $threadInChannel = create('App\Thread', ['channel_id' => $channel->id ]);
+        $threadNotInChannel = create('App\Thread');
+
+        $this->get('/threads/' . $channel->slug)
+        ->assertSee($threadInChannel->title)
+        ->assertDontSee($threadNotInChannel->title);
+    }
+    /** @test */
+    public function a_user_can_filter_threads_by_username()
+    {
+        $this->signIn(create('App\User', ['name' => 'JohnDoe' ]));
+
+        $threadByJhon = create('App\Thread', ['user_id' => auth()->id() ]);
+
+        $threadnotByJhon = create('App\Thread');
+
+        $this->get('threads?by=JohnDoe')
+        ->assertSee($threadByJhon->title)
+        ->assertDontSee($threadnotByJhon->title);
     }
 }

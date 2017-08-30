@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ThreadTest extends TestCase
 {
@@ -14,6 +14,12 @@ class ThreadTest extends TestCase
     {
         parent::setUp();
         $this->thread = create('App\Thread');
+    }
+    /** @test */
+    public function a_thread_can_make_a_string_path()
+    {
+        $thread = create('App\Thread');
+        $this->assertEquals("/threads/{$thread->channel->slug}/{$thread->id}", $thread->path());
     }
     /** @test */
     public function a_thread_has_creator()
