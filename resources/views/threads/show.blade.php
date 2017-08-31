@@ -14,9 +14,11 @@
                 </div>
         </div><!-- panel panel-default-->
 
-        @foreach($thread->replies as $reply)
+        @foreach($replies as $reply)
             @include('threads.reply')
         @endforeach
+
+        {{ $replies->links() }}
 
         @if (auth()->check())
             <form method="POST" action="{{ $thread->path() . '/replies' }}">
@@ -39,7 +41,7 @@
                 <p>
                     This thread was published {{ $thread->created_at->diffForHumans() }} by
                     <a href="/"> {{ $thread->creator->name }} </a> and currently
-                    has {{ $thread->replies->count() }} comments
+                    has {{ $thread->replies_count }} {{ str_plural('comment', $thread->replies_count) }}
                 </p>
             </div>
         </div><!-- panel panel-default-->
